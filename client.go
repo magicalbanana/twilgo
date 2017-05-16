@@ -55,3 +55,18 @@ func (t *Twilio) post(formValues url.Values, twilioURL string) (*http.Response, 
 
 	return client.Do(req)
 }
+
+func (t *Twilio) get(twilioURL string) (*http.Response, error) {
+	req, err := http.NewRequest("GET", twilioURL, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.SetBasicAuth(t.AccountSid, t.AuthToken)
+
+	client := t.HTTPClient
+	if client == nil {
+		client = http.DefaultClient
+	}
+
+	return client.Do(req)
+}
